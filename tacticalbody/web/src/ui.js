@@ -215,7 +215,7 @@ function viewFuel() {
     <span class="small muted">${st.state === "fasting" ? `until your first meal at ${db.profile.eatStart}. Water, black coffee and plain tea are fine.` : `until the kitchen closes at ${db.profile.eatEnd}.`}</span></div>
   <div class="card"><div class="row between"><h3>Protein</h3><span class="mono">${total} / ${t.protein} g</span></div>
     <div class="bar signal"><i style="width:${Math.min(100, total / t.protein * 100)}%"></i></div>
-    <p class="small muted">In a 7-hour window aim for 35–40 g per meal. Tap to add:</p>
+    <p class="small muted">In a 7-hour window aim for 35–40 g per meal. Tap to add (typical values; check the label for exact figures):</p>
     <div class="foods">${window.FOODS.map((x, i) => `<button data-act="food" data-i="${i}"><span>${esc(x.n)}</span><b>${x.p} g</b></button>`).join("")}</div>
     <div class="inline"><input id="f-custom" type="number" inputmode="numeric" placeholder="Other: grams of protein" aria-label="Other protein in grams"><button class="btn" data-act="food-custom">Add</button></div>
     ${f.protein.length ? `<ul class="exlist">${f.protein.map((x, i) => `<li><span>${esc(x.n)}</span><span class="row" style="gap:6px"><span class="t">${x.p} g</span><button class="linkbtn" data-act="food-del" data-i="${i}" aria-label="Remove">✕</button></span></li>`).join("")}</ul>` : ""}
