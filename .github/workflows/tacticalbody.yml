@@ -1,0 +1,32 @@
+name: Build TacticalBody
+on:
+  push:
+    branches: [main]
+    paths: ["tacticalbody/**", ".github/workflows/tacticalbody.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+      - name: Build signed APK
+        run: gradle -p tacticalbody/android assembleRelease --no-daemon
+      - name: Rename APK
+        run: cp tacticalbody/android/app/build/outputs/apk/release/app-release.apk TacticalBody.apk
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: tacticalbody-v1.0.${{ github.run_number }}
+          name: TacticalBody 1.0 (build ${{ github.run_number }})
+          body: Download TacticalBody.apk on your Android phone and open it to install. Updates install over the top and keep your data.
+          files: TacticalBody.apk
+          make_latest: true

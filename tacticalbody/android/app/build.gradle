@@ -1,0 +1,31 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.williamkwan.tacticalbody'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'com.williamkwan.tacticalbody'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+    signingConfigs {
+        // Fixed key kept in the repo so every build can update the installed app without losing data.
+        sideload {
+            storeFile file('../tacticalbody.jks')
+            storePassword 'tacticalbody-sideload'
+            keyAlias 'tacticalbody'
+            keyPassword 'tacticalbody-sideload'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.sideload
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
